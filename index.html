@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Guessing Game</title>
+    <style>
+    body{
+        background-image : url("back.jpg");
+        
+    }
+    </style>
+  </head>
+  <body>
+    <div class = "row mx-auto">
+     <div class = "col"></div>
+     <div class = "col" style = "margin-top:10%;text-align:center">
+            <h1 style = "color:blue"><i>Guessing Game</i></h1>  
+            <input class = "form-control mt-4" type = "number" id = "num" placeholder = "Enter A Number">
+            <button class = "btn btn-primary mt-3" type = "submit" onclick = "sub();">Submit</button>
+     </div>
+     <div class = "col"></div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+<script>
+
+function sub(){
+    var userNumber = document.getElementById("num").value;
+    //console.log(userNumber);
+    const enterNumber = () => {
+        //console.log(userNumber);
+        return new Promise((resolve, reject) => {
+            const randomNumber = Math.floor(Math.random() * 6 + 1); // Pick a random number between 1 and 6
+
+            if (userNumber == randomNumber) { // If the user's number matches the random number, return 2 points
+            resolve({
+                points: 2,
+                randomNumber
+            });
+            } 
+            else if (userNumber == randomNumber - 1 || userNumber == randomNumber + 1) { // If the user's number is different than the random number by 1, return 1 point
+            resolve({
+                points: 1,
+                randomNumber
+            });
+            } 
+            else { // Else return 0 points
+            resolve({
+                points: 0,
+                randomNumber
+            });
+            }
+        });
+    };
+    enterNumber().then((value)=>{
+        alert("Random Number: " + value["randomNumber"] + "\nYour Input: " + userNumber + "\nYour Point: " + value["points"]);
+        continueGame();
+    }).catch((error)=>{
+        alert("error");
+    })
+}
+
+const continueGame = () => {
+  return new Promise((resolve) => {
+    if (window.confirm("Do you want to continue?")) { // Ask if the user want to continue the game with a confirm modal
+      //resolve(true);
+      location.reload();
+    } else {
+      //resolve(false);
+      alert("Thank You For The Playing");
+      location.reload();
+    }
+  });
+};
+
+</script>
